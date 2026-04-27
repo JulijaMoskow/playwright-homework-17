@@ -2,8 +2,10 @@ import { defineConfig, devices } from '@playwright/test';
 import dotenv from 'dotenv';
 import path from 'path';
 
-dotenv.config({ path: path.resolve(__dirname, '.env') });
 
+dotenv.config({
+  path: path.resolve(__dirname, 'env/prod.env')
+});
 export default defineConfig({
   testDir: './tests',
   fullyParallel: true,
@@ -13,7 +15,7 @@ export default defineConfig({
   reporter: 'html',
 
   use: {
-    baseURL: process.env.APP_URL,
+    baseURL: process.env.URL,
     trace: 'on-first-retry',
   },
 
@@ -21,6 +23,14 @@ export default defineConfig({
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
+    },
+    {
+      name: 'firefox',
+      use: { ...devices['Desktop Firefox'] },
+    },
+    {
+      name: 'webkit',
+      use: { ...devices['Desktop Safari'] },
     },
   ],
 });

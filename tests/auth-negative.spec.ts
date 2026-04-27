@@ -6,10 +6,11 @@ test.describe('Auth negative tests', () => {
         await page.goto('/signin');
     });
 
-    test('button should be disabled when both fields are empty', async ({ page }) => {
+    test('should stay on signin page when both fields are empty', async ({ page }) => {
         const signInButton = page.getByRole('button', { name: /sign in/i });
 
         await signInButton.click();
+
         await expect(page).toHaveURL(/signin/);
     });
 
@@ -17,9 +18,7 @@ test.describe('Auth negative tests', () => {
         const loginInput = page.getByRole('textbox').first();
         const signInButton = page.getByRole('button', { name: /sign in/i });
 
-        const randomUsername = faker.internet.username();
-
-        await loginInput.fill(randomUsername);
+        await loginInput.fill(faker.internet.username());
 
         await expect(signInButton).toBeDisabled();
     });
@@ -29,11 +28,8 @@ test.describe('Auth negative tests', () => {
         const passwordInput = page.locator('input[type="password"]');
         const signInButton = page.getByRole('button', { name: /sign in/i });
 
-        const randomUsername = faker.internet.username();
-        const randomPassword = faker.internet.password({ length: 3 });
-
-        await loginInput.fill(randomUsername);
-        await passwordInput.fill(randomPassword);
+        await loginInput.fill(faker.internet.username());
+        await passwordInput.fill(faker.internet.password({ length: 3 }));
 
         await expect(signInButton).toBeDisabled();
     });
