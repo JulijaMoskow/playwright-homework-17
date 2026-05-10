@@ -1,7 +1,8 @@
 import { expect, Locator, Page } from '@playwright/test';
+import { BasePage } from './base-page';
 
-export class OrderPage {
-    readonly page: Page;
+export class OrderPage extends BasePage {
+
     readonly statusButton: Locator;
     readonly createOrderButton: Locator;
     readonly nameInput: Locator;
@@ -9,7 +10,7 @@ export class OrderPage {
     readonly commentInput: Locator;
 
     constructor(page: Page) {
-        this.page = page;
+        super(page);
         this.statusButton = page.getByRole('button').first();
         this.createOrderButton = page.locator('button').last();
         this.nameInput = page.locator('input').nth(0);
