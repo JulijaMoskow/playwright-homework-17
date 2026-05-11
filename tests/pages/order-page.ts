@@ -24,6 +24,9 @@ export class OrderPage extends BasePage {
     async checkInnerComponents(): Promise<void> {
         await this.page.waitForTimeout(2000);
 
+        
+        await this.checkLanguageSwitcherVisible();
+
         await expect(this.statusButton).toBeVisible();
         await expect(this.createOrderButton).toBeVisible();
         await expect(this.nameInput).toBeVisible();
@@ -32,7 +35,7 @@ export class OrderPage extends BasePage {
     }
 
     async searchOrder(orderId: number): Promise<NotFoundPage | OrderDetailsPage> {
-      
+
 
         const url = new URL(this.page.url());
         url.searchParams.set('orderId', String(orderId));
