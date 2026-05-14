@@ -1,16 +1,18 @@
 import { Locator, Page } from '@playwright/test';
 import { OrderPage } from './order-page';
+import { BasePage } from './base-page';
 import { SERVICE_URL } from '../../config/env-data';
 
-export class LoginPage {
-    readonly page: Page;
+export class LoginPage extends BasePage {
+
     readonly url: string;
     readonly signInButton: Locator;
     readonly usernameField: Locator;
     readonly passwordField: Locator;
 
     constructor(page: Page) {
-        this.page = page;
+        super(page);
+
         this.url = SERVICE_URL;
         this.usernameField = page.getByRole('textbox').first();
         this.passwordField = page.locator('input[type="password"]');
