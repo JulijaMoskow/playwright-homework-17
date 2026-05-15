@@ -1,16 +1,16 @@
-import { BasePage } from './base-page'
 import { expect, Locator, Page } from '@playwright/test'
+import { BasePage } from './base-page'
 
 export class NotFoundPage extends BasePage {
-    readonly container: Locator
+    readonly pageContent: Locator
 
     constructor(page: Page) {
         super(page)
 
-        this.container = this.page.getByTestId('orderNotFound-container')
+        this.pageContent = page.locator('body')
     }
 
     async checkVisible(visible: boolean): Promise<void> {
-        await expect(this.container).toBeVisible({ visible })
+        await expect(this.pageContent).toContainText('Введите номер заказа')
     }
 }
