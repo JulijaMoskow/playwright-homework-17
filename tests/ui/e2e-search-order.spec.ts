@@ -17,6 +17,7 @@ test('Search order with invalid orderId', async ({ page }) => {
     await orderPage.searchOrder(0);
 
     await page.waitForURL(/orderId=0/);
+    await notFoundPage.checkVisible(true);
 });
 test('Search order with mocked response', async ({ page }) => {
     await page.route('**/api/orders/**', async route => {
@@ -45,6 +46,7 @@ test('Search order with mocked response', async ({ page }) => {
     const orderDetailsPage = await orderPage.searchOrder(999) as OrderDetailsPage;
 
     await expect(page).toHaveURL(/orderId=999/);
+    await orderDetailsPage.checkVisible(true);
 
 
 });
@@ -95,8 +97,12 @@ test('Search delivered order with mocked response', async ({ page }) => {
         process.env.TEST_USERNAME!,
         process.env.TEST_PASSWORD!
     );
+    const orderDetailsPage = new OrderDetailsPage(page);
 
     await orderPage.searchOrder(555);
 
     await expect(page).toHaveURL(/orderId=555/);
+
+    await orderDetailsPage.checkVisible(true);
+
 });
