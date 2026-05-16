@@ -1,4 +1,4 @@
-import { test } from '@playwright/test';
+import { test, expect } from '../fixtures/auth.fixtures';
 import { LoginPage } from '../pages/login-page';
 import { PASSWORD, USERNAME } from '../../config/env-data';
 import { OrderPage } from '../pages/order-page';
@@ -12,16 +12,17 @@ test('Login test + order page components check', async ({ page }) => {
 
     await orderPage.checkInnerComponents();
 });
+test('Login via localStorage jwt + order page components check', async ({ page, authToken }) => {
 
-test('Login via localStorage jwt + order page components check', async ({ page }) => {
-    const orderPage = new OrderPage(page);
+const orderPage = new OrderPage(page);
 
-    await page.goto('/');
-    await page.evaluate(() => {
-        localStorage.setItem('jwt', 'test-jwt-token');
-    });
+await page.goto('/');
 
-    await page.reload();
+await page.evaluate((token) => {
+localStorage.setItem('jwt', token);
+}, authToken);
 
-    await orderPage.checkInnerComponents();
+await page.reload();
+
+await orderPage.checkInnerComponents();
 });
