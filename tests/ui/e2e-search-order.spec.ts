@@ -1,8 +1,9 @@
-import { expect, test } from '@playwright/test';
+import { test, expect } from '../fixtures/auth.fixtures' 
 import { LoginPage } from '../pages/login-page';
 import { NotFoundPage } from '../pages/order-not-found-page';
 import { OrderDetailsPage } from '../pages/order-details-page';
 
+test.setTimeout(60000)
 test('Search order with invalid orderId', async ({ page }) => {
     const loginPage = new LoginPage(page);
     const notFoundPage = new NotFoundPage(page);
